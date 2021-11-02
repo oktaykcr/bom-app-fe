@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import { IconContext } from "react-icons";
+import { useDispatch } from "react-redux";
+
+import AppRouter from "./navigation/AppRouter";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+
+import 'react-toastify/dist/ReactToastify.css';
+
+import { loadUser } from "./store/actions/authActions";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <IconContext.Provider value={{ color: 'white' }}>
+        <ToastContainer theme="dark" />
+        <Header />
+        <div className="container mx-auto">
+          <AppRouter />
+        </div>
+        <Footer />
+      </IconContext.Provider>
+    </BrowserRouter>
   );
 }
 
