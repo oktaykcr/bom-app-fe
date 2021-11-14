@@ -6,7 +6,7 @@ import { getBoms, deleteBomById } from "../../store/actions/bomActions";
 import { MdUpdate } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-export default function BomList({ setBom }) {
+export default function BomList({ htmlFor, setBom }) {
     const boms = useSelector((state) => state.boms);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -16,15 +16,15 @@ export default function BomList({ setBom }) {
     }, [dispatch])
 
 
-    const handleShow = (id) => {
+    const handleShowBomDetails = (id) => {
         history.push(`/bom/${id}`);
     };
 
-    const handleDelete = (id) => {
+    const handleDeleteBom = (id) => {
         dispatch(deleteBomById(id));
     };
 
-    const handleUpdate = (currentBom) => {
+    const handleEditBom = (currentBom) => {
         setBom(currentBom);
     };
 
@@ -38,14 +38,14 @@ export default function BomList({ setBom }) {
                                 <h2 className="card-title">{bom.title}</h2>
                                 <p>{bom.description}</p>
                                 <div className="justify-center card-actions">
-                                    <button className="btn btn-primary" onClick={() => handleShow(bom.id)}>
+                                    <button className="btn btn-primary" onClick={() => handleShowBomDetails(bom.id)}>
                                         Show
                                     </button>
-                                    <label onClick={() => handleUpdate(bom)}  htmlFor="bomSaveUpdateModal" className="btn btn-accent modal-button">
+                                    <label onClick={() => handleEditBom(bom)}  htmlFor={htmlFor} className="btn btn-accent modal-button">
                                         <MdUpdate size={30} />
                                     </label>
-                                    <input type="checkbox" id="bomSaveUpdateModal" className="modal-toggle"/>
-                                    <button className="btn btn-secondary" onClick={() => handleDelete(bom.id)}>
+                                    <input type="checkbox" id={htmlFor} className="modal-toggle"/>
+                                    <button className="btn btn-secondary" onClick={() => handleDeleteBom(bom.id)}>
                                         <FaRegTrashAlt size={25} />
                                     </button>
                                 </div>

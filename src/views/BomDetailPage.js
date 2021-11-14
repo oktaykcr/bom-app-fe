@@ -1,64 +1,62 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import BomTable from "../components/bom/BomTable";
+import Table from "../components/common/Table";
 
 export default function BomDetailPage() {
     let { bomId } = useParams();
 
     const [counter, setCounter] = useState(3);
 
-    const [data, setData] = useState(
-        [
-            {
-                col1: 'Hello',
-                col2: 'World',
-            },
-            {
-                col1: 'react-table',
-                col2: 'rocks',
-            },
-            {
-                col1: 'whatever',
-                col2: 'you want',
-            },
-            {
-                col1: 'Hello',
-                col2: 'World',
-            },
-            {
-                col1: 'react-table',
-                col2: 'rocks',
-            },
-            {
-                col1: 'whatever',
-                col2: 'you want',
-            },
-            {
-                col1: 'Hello',
-                col2: 'World',
-            },
-            {
-                col1: 'react-table',
-                col2: 'rocks',
-            },
-            {
-                col1: 'whatever',
-                col2: 'you want',
-            },
-            {
-                col1: 'Hello',
-                col2: 'World',
-            },
-            {
-                col1: 'react-table',
-                col2: 'rocks',
-            },
-            {
-                col1: 'whatever',
-                col2: 'you want',
-            },
-        ]
-    );
+    const data = [
+        {
+            col1: 'Hello',
+            col2: 'World',
+        },
+        {
+            col1: 'react-table',
+            col2: 'rocks',
+        },
+        {
+            col1: 'whatever',
+            col2: 'you want',
+        },
+        {
+            col1: 'Hello',
+            col2: 'World',
+        },
+        {
+            col1: 'react-table',
+            col2: 'rocks',
+        },
+        {
+            col1: 'whatever',
+            col2: 'you want',
+        },
+        {
+            col1: 'Hello',
+            col2: 'World',
+        },
+        {
+            col1: 'react-table',
+            col2: 'rocks',
+        },
+        {
+            col1: 'whatever',
+            col2: 'you want',
+        },
+        {
+            col1: 'Hello',
+            col2: 'World',
+        },
+        {
+            col1: 'react-table',
+            col2: 'rocks',
+        },
+        {
+            col1: 'whatever',
+            col2: 'you want',
+        },
+    ];
 
     const [columns, setColumns] = useState([
         {
@@ -99,7 +97,7 @@ export default function BomDetailPage() {
             <div>Bom List {bomId}</div>
             <button className="btn btn-primary" onClick={addCol}>Add</button>
             <button className="btn btn-primary" onClick={reset}>Reset</button>
-            <BomTable data={data} columns={columns} />
+            <Table data={data} columns={columns} />
         </>
     );
 }

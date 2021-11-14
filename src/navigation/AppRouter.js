@@ -4,6 +4,7 @@ import HomePage from "../views/HomePage";
 import LoginPage from "../views/LoginPage";
 import RegisterPage from "../views/RegisterPage";
 import BomPage from "../views/BomPage";
+import ComponentPage from "../views/ComponentPage";
 import BomDetailPage from "../views/BomDetailPage";
 
 import PrivateRoute from "./PrivateRoute";
@@ -14,6 +15,7 @@ const routes = [
     { path: "/login", component: LoginPage, title: "loginPage", isPrivate: false },
     { path: "/register", component: RegisterPage, title: "registerPage", isPrivate: false },
     { path: "/bom", component: BomPage, title: "bomPage", isPrivate: true },
+    { path: "/component", component: ComponentPage, title: "componentPage", isPrivate: true },
     { path: "/bom/:bomId", component: BomDetailPage, title: "bomDetailPage", isPrivate: true },
     { path: "*", component: NotFound, title: "notFound", isPrivate: false }
 ];

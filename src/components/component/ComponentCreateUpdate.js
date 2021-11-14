@@ -1,8 +1,9 @@
 import { createRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateBom, createBom } from "../../store/actions/bomActions";
 
-export default function BomCreateUpdate({ htmlFor, bom, setBom, bomModel }) {
+import { createComponent, updateComponent } from "../../store/actions/componentActions";
+
+export default function ComponentCreateUpdate({htmlFor, component, setComponent, componentModel}) {
 
     const [actionType, setActionType] = useState('Create');
     const dispatch = useDispatch();
@@ -10,18 +11,18 @@ export default function BomCreateUpdate({ htmlFor, bom, setBom, bomModel }) {
     const cancelButtonRef = createRef();
 
     useEffect(() => {
-        if (bom.id) {
+        if (component.id) {
             setActionType('Upadate');
         } else {
             setActionType('Create');
         }
-    }, [bom]);
+    }, [component]);
 
     const handleCreateOrUpdate = () => {
-        if (bom.id) { // update
-            dispatch(updateBom(bom));
+        if (component.id) { // update
+            dispatch(updateComponent(component));
         } else { // create
-            dispatch(createBom(bom));
+            dispatch(createComponent(component));
         }
 
         closeModal();
@@ -37,7 +38,7 @@ export default function BomCreateUpdate({ htmlFor, bom, setBom, bomModel }) {
     }
 
     const resetModelState = () => {
-        setBom(bomModel);
+        setComponent(componentModel);
     }
 
     return (
@@ -46,12 +47,14 @@ export default function BomCreateUpdate({ htmlFor, bom, setBom, bomModel }) {
                 <div className="modal-box">
                     <div className="w-full flex justify-center">
                         <form className="w-full rounded-lg">
-                            <h2 className="text-3xl text-center mb-4">{actionType} BOM</h2>
+                            <h2 className="text-3xl text-center mb-4">{actionType} Component</h2>
                             <div className="form-control">
-                                <label className="label">Title</label>
-                                <input value={bom.title} onChange={(e) => setBom({ ...bom, title: e.target.value })} id="title" type="text" className="input input-primary input-bordered" />
-                                <label className="label">Description</label>
-                                <textarea value={bom.description} onChange={(e) => setBom({ ...bom, description: e.target.value })} id="description" className="textarea h-24 textarea-bordered textarea-primary"></textarea>
+                                <label className="label">Part Number</label>
+                                <input type="text" value={component.partNumber} onChange={(e) => setComponent({ ...component, partNumber: e.target.value })} id="partNumber" className="input input-primary input-bordered" />
+                                <label className="label">Supplier Link</label>
+                                <input type="text" value={component.supplierLink} onChange={(e) => setComponent({ ...component, supplierLink: e.target.value })} id="supplierLink" className="input input-primary input-bordered" />
+                                <label className="label">quantityOnHand</label>
+                                <input type="number" value={component.quantityOnHand} onChange={(e) => setComponent({ ...component, quantityOnHand: e.target.value })} id="quantityOnHand" className="input input-primary input-bordered" />
                             </div>
                         </form>
                     </div>

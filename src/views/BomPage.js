@@ -6,23 +6,27 @@ import { FaPlus } from "react-icons/fa";
 
 export default function BomPage() {
 
-    const [bom, setBom] = useState({
+    const modalFor = "bomSaveUpdateModal";
+
+    const bomModel = {
         "id": null,
         "title": '',
         "descripiton": ''
-    })
+    };
+
+    const [bom, setBom] = useState(bomModel)
 
     return (
         <>
             <h1>BOM Page</h1>
-            <div className="flex justify-end mb-5 mt-5">
-                <label htmlFor="bomSaveUpdateModal" className="btn btn-primary modal-button">
+            <div className="flex mb-5 mt-5">
+                <label htmlFor={modalFor} className="btn btn-primary modal-button">
                     <FaPlus />
                 </label>
-                <input type="checkbox" id="bomSaveUpdateModal" className="modal-toggle" />
-                <BomCreateUpdate bom={bom} setBom={setBom} />
+                <input type="checkbox" id={modalFor} className="modal-toggle" />
+                <BomCreateUpdate htmlFor={modalFor} bom={bom} setBom={setBom} bomModel={bomModel} />
             </div>
-            <BomList setBom={setBom} />
+            <BomList htmlFor={modalFor} setBom={setBom} />
         </>
     );
 }

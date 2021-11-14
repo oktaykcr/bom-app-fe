@@ -5,7 +5,7 @@ import { logout } from '../../store/actions/authActions';
 
 export default function Header(props) {
     const dispatch = useDispatch();
-    
+
     const auth = useSelector(state => state.auth);
 
     const handleLogout = (e) => {
@@ -31,6 +31,11 @@ export default function Header(props) {
             {
                 auth.username ?
                     <>
+                        <div className="flex-none">
+                            <Link to="/component" className="btn btn-ghost btn-sm rounded-btn">
+                                Components
+                            </Link>
+                        </div>
                         <div className="flex-none">
                             <Link to="/bom" className="btn btn-ghost btn-sm rounded-btn">
                                 BOM
