@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { createComponent, updateComponent } from "../../store/actions/componentActions";
 
-export default function ComponentCreateUpdate({htmlFor, component, setComponent, componentModel}) {
+export default function ComponentCreateUpdate({ htmlFor, component, setComponent, componentModel, setIsProcessing }) {
 
     const [actionType, setActionType] = useState('Create');
     const dispatch = useDispatch();
@@ -19,14 +19,20 @@ export default function ComponentCreateUpdate({htmlFor, component, setComponent,
     }, [component]);
 
     const handleCreateOrUpdate = () => {
+        setIsProcessing(true);
+
         if (component.id) { // update
-            dispatch(updateComponent(component));
+            dispatch(updateComponent(component)).then(() => {
+                setIsProcessing(false);
+            });
         } else { // create
-            dispatch(createComponent(component));
+            dispatch(createComponent(component)).then(() => {
+                setIsProcessing(false);
+            });
         }
 
-        closeModal();
         resetModelState();
+        closeModal();
     }
 
     const handleCancel = () => {

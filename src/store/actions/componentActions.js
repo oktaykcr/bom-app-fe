@@ -29,43 +29,49 @@ export const getComponents = (pageNumber, pageOffset) => {
 
 export const createComponent = (component) => {
     return (dispatch) => {
-        axios.post(`${url}/component`, component)
-            .then((createdComponent) => {
-                dispatch({
-                    type: "CREATE_COMPONENT",
-                    createdComponent
+        return new Promise((resolve, reject) => {
+            axios.post(`${url}/component`, component)
+                .then((createdComponent) => {
+                    dispatch({
+                        type: "CREATE_COMPONENT",
+                        createdComponent
+                    });
+                    toast.success("Created successfully.", {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    resolve();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toast.error(error.response?.data, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
                 });
-                toast.success("Created successfully.", {
-                    position: toast.POSITION.BOTTOM_RIGHT,
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-                toast.error(error.response?.data, {
-                    position: toast.POSITION.BOTTOM_RIGHT,
-                });
-            });
+        });
     }
 }
 
 export const updateComponent = (component) => {
     return (dispatch) => {
-        axios.put(`${url}/component`, component)
-            .then((updatedComponent) => {
-                dispatch({
-                    type: "UPDATE_COMPONENT",
-                    updatedComponent
+        return new Promise((resolve, reject) => {
+            axios.put(`${url}/component`, component)
+                .then((updatedComponent) => {
+                    dispatch({
+                        type: "UPDATE_COMPONENT",
+                        updatedComponent
+                    });
+                    toast.success("Updated successfully.", {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    resolve();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toast.error(error.response?.data, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
                 });
-                toast.success("Updated successfully.", {
-                    position: toast.POSITION.BOTTOM_RIGHT,
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-                toast.error(error.response?.data, {
-                    position: toast.POSITION.BOTTOM_RIGHT,
-                });
-            });
+        });
     }
 }
 

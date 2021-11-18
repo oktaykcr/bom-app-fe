@@ -18,7 +18,7 @@ export default function BomPage() {
 
     return (
         <>
-            <h1>BOM Page</h1>
+            <h1 className="header">BOM</h1>
             <div className="flex mb-5 mt-5">
                 <label htmlFor={modalFor} className="btn btn-primary modal-button">
                     <FaPlus />
