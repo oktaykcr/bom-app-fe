@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getComponentsUsed, deleteComponentUsedById } from "../../store/actions/componentUsedActions";
+import { getAllComponentsUsed, deleteComponentUsedById } from "../../store/actions/componentUsedActions";
 import Table from "../common/Table";
 
 import { MdEdit, MdDelete } from "react-icons/md";
@@ -100,7 +100,7 @@ export default function ComponentUsedTable({ bomId, htmlFor, setComponentUsed, i
     }, [htmlFor, isProcessing, setComponentUsed, dispatch]);
 
     useEffect(() => {
-        dispatch(getComponentsUsed(bomId, 0, 5));
+        dispatch(getAllComponentsUsed(bomId));
     }, [dispatch, bomId]);
 
     return (

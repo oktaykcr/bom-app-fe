@@ -28,6 +28,29 @@ export const getComponentsUsed = (bomId, pageNumber, pageOffset) => {
     };
 }
 
+export const getAllComponentsUsed = (bomId) => {
+    return (dispatch) => {
+        axios
+            .get(`${url}/componentused/all`, {
+                params: {
+                    bomId: bomId
+                }
+            })
+            .then((componentsUsed) => {
+                dispatch({
+                    type: "GET_COMPONENTS_USED",
+                    componentsUsed
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                toast.error("Component to use could not fetch!", {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+            });
+    };
+}
+
 export const createComponentUsed = (componentUsed) => {
     return (dispatch) => {
         return new Promise((resolve, reject) => {

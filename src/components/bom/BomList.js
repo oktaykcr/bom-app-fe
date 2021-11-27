@@ -1,20 +1,47 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getBoms, deleteBomById } from "../../store/actions/bomActions";
+import ReactPaginate from 'react-paginate';
+import { useAsyncDebounce } from "react-table"
 
-import { MdUpdate } from "react-icons/md";
+import Search from "../common/Search";
+
+import { getBomsByTitle, deleteBomById } from "../../store/actions/bomActions";
+
+import { MdEdit } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-export default function BomList({ htmlFor, setBom }) {
+export default function BomList({ htmlFor, setBom, itemsPerPage }) {
     const boms = useSelector((state) => state.boms);
     const dispatch = useDispatch();
     const history = useHistory();
 
-    useEffect(() => {
-        dispatch(getBoms(0, 5));
-    }, [dispatch])
+    //search
+    const [searchValue, setSearchValue] = useState('');
 
+    //react-paginate
+    const [currentItems, setCurrentItems] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
+
+    useEffect(() => {
+        let endOffset = itemOffset + itemsPerPage;
+        setCurrentItems(boms.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(boms.length / itemsPerPage));
+    }, [itemOffset, itemsPerPage, boms]);
+
+    useEffect(() => {
+        dispatch(getBomsByTitle(searchValue));
+    }, [dispatch, searchValue]);
+
+    const handlePageClick = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % boms.length;
+        setItemOffset(newOffset);
+    };
+
+    const handleSearch = useAsyncDebounce(value => {
+        setSearchValue(value);
+    }, 200)
 
     const handleShowBomDetails = (id) => {
         history.push(`/bom/${id}`);
@@ -30,23 +57,30 @@ export default function BomList({ htmlFor, setBom }) {
 
     return (
         <>
-            <div className="grid grid-cols-3 gap-4">
+            <div
+                style={{
+                    textAlign: 'right',
+                    backgroundColor: 'transparent'
+                }}>
+                <Search value={searchValue} setValue={setSearchValue} onChange={handleSearch} />
+            </div>
+            <div className="grid grid-cols-3 gap-4 mb-5 mt-5">
                 {
-                    boms.map((bom, index) => (
-                        <div key={index} className="card text-center shadow-2xl lg:card-side bg-gray-500 text-accent-content">
+                    currentItems.map((bom, index) => (
+                        <div key={index} className="card text-center shadow-2xl lg:card-side bg-gray-800 text-accent-content">
                             <div className="card-body">
                                 <h2 className="card-title">{bom.title}</h2>
                                 <p>{bom.description}</p>
                                 <div className="justify-center card-actions">
-                                    <button className="btn btn-primary" onClick={() => handleShowBomDetails(bom.id)}>
+                                    <button className="btn btn-outline" onClick={() => handleShowBomDetails(bom.id)}>
                                         Show
                                     </button>
-                                    <label onClick={() => handleEditBom(bom)}  htmlFor={htmlFor} className="btn btn-accent modal-button">
-                                        <MdUpdate size={30} />
+                                    <label onClick={() => handleEditBom(bom)} htmlFor={htmlFor} className="btn btn-outline btn-accent modal-button">
+                                        <MdEdit size={25} />
                                     </label>
-                                    <input type="checkbox" id={htmlFor} className="modal-toggle"/>
-                                    <button className="btn btn-secondary" onClick={() => handleDeleteBom(bom.id)}>
-                                        <FaRegTrashAlt size={25} />
+                                    <input type="checkbox" id={htmlFor} className="modal-toggle" />
+                                    <button className="btn btn-outline btn-secondary" onClick={() => handleDeleteBom(bom.id)}>
+                                        <FaRegTrashAlt size={20} />
                                     </button>
                                 </div>
                                 <div className="flex justify-center mt-2">
@@ -57,6 +91,22 @@ export default function BomList({ htmlFor, setBom }) {
                     ))
                 }
             </div>
+            <ReactPaginate
+                breakLabel="..."
+                nextLabel="next"
+                previousLabel="previous"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={pageCount}
+                renderOnZeroPageCount={null}
+                pageClassName="btn"
+                previousClassName="btn"
+                nextClassName="btn"
+                breakClassName="btn"
+                containerClassName="btn-group flex justify-center"
+                activeClassName="btn-active"
+                disabledClassName="btn-disabled"
+            />
         </>
     )
 

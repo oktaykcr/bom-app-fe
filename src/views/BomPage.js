@@ -1,4 +1,5 @@
 import { useState } from "react"
+
 import BomCreateUpdate from "../components/bom/BomCreateUpdate";
 import BomList from "../components/bom/BomList";
 
@@ -11,10 +12,10 @@ export default function BomPage() {
     const bomModel = {
         "id": null,
         "title": '',
-        "descripiton": ''
+        "description": ''
     };
 
-    const [bom, setBom] = useState(bomModel)
+    const [bom, setBom] = useState(bomModel);
 
     return (
         <>
@@ -26,7 +27,7 @@ export default function BomPage() {
                 <input type="checkbox" id={modalFor} className="modal-toggle" />
                 <BomCreateUpdate htmlFor={modalFor} bom={bom} setBom={setBom} bomModel={bomModel} />
             </div>
-            <BomList htmlFor={modalFor} setBom={setBom} />
+            <BomList itemsPerPage={6} htmlFor={modalFor} setBom={setBom} />
         </>
     );
 }

@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getComponents } from "../../store/actions/componentActions";
+import { getAllComponents } from "../../store/actions/componentActions";
 import Table from "../common/Table";
 
 import { deleteComponentById } from "../../store/actions/componentActions";
@@ -12,7 +12,7 @@ export default function ComponentTable({ htmlFor, setComponent, isProcessing }) 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getComponents(0, 5));
+        dispatch(getAllComponents());
     }, [dispatch])
 
     const columns = useMemo(() => {

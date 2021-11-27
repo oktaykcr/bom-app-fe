@@ -1,5 +1,5 @@
 import { createRef, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { createComponentUsed, updateComponentUsed } from "../../store/actions/componentUsedActions";
 
@@ -7,6 +7,7 @@ export default function ComponentUsedCreateUpdate({ bomId, htmlFor, componentUse
 
     const [actionType, setActionType] = useState('Create');
     const dispatch = useDispatch();
+    const components = useSelector((state) => state.components);
 
     const cancelButtonRef = createRef();
 
@@ -56,8 +57,14 @@ export default function ComponentUsedCreateUpdate({ bomId, htmlFor, componentUse
                         <form className="w-full rounded-lg">
                             <h2 className="text-3xl text-center mb-4">{actionType} Component To Use</h2>
                             <div className="form-control">
-                                <label className="label">Part Number</label>
-                                <input type="text" value={componentUsed.component.partNumber} onChange={(e) => setComponentUsed({ ...componentUsed, component: {partNumber: e.target.value } })} id="partNumber" className="input input-primary input-bordered" />
+                                <label class="label">Part Number</label>
+                                <select value={componentUsed.component.partNumber} onChange={(e) => setComponentUsed({ ...componentUsed, component: {partNumber: e.target.value } })} id="partNumber" class="select select-bordered select-primary w-full">
+                                    {
+                                        components.map((component) => (
+                                            <option>{component.partNumber}</option>
+                                        ))
+                                    }
+                                </select>
                                 <label className="label">Quantity</label>
                                 <input type="number" value={componentUsed.quantity} onChange={(e) => setComponentUsed({ ...componentUsed, quantity: e.target.value })} id="quantity" className="input input-primary input-bordered" />
                                 <label className="label">Cost</label>

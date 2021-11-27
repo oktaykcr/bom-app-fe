@@ -5,25 +5,56 @@ import { url } from "../../api";
 
 export const getBoms = (pageNumber, pageOffset) => {
     return (dispatch) => {
-        axios
-            .get(`${url}/bom`, {
-                params: {
-                    pageNumber: pageNumber,
-                    pageOffset: pageOffset
-                }
-            })
-            .then((boms) => {
-                dispatch({
-                    type: "GET_BOMS",
-                    boms
+        return new Promise((resolve, reject) => {
+            axios
+                .get(`${url}/bom`, {
+                    params: {
+                        pageNumber: pageNumber,
+                        pageOffset: pageOffset
+                    }
+                })
+                .then((boms) => {
+                    dispatch({
+                        type: "GET_BOMS",
+                        boms
+                    });
+                    resolve(boms.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toast.error(error.response?.data, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    resolve();
                 });
-            })
-            .catch((error) => {
-                console.log(error);
-                toast.error(error.response?.data, {
-                    position: toast.POSITION.BOTTOM_RIGHT,
+        });
+    };
+}
+
+export const getBomsByTitle = (title) => {
+    return (dispatch) => {
+        return new Promise((resolve, reject) => {
+            axios
+                .get(`${url}/bom/search`, {
+                    params: {
+                        title: title
+                    }
+                })
+                .then((boms) => {
+                    dispatch({
+                        type: "GET_BOMS",
+                        boms
+                    });
+                    resolve(boms.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toast.error("BOMs could not fetch!", {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    resolve();
                 });
-            });
+        });
     };
 }
 

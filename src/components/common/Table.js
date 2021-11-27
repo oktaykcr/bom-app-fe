@@ -2,7 +2,7 @@ import { useMemo, useState } from "react"
 import { useTable, useSortBy, useFilters, useGlobalFilter, useAsyncDebounce, usePagination } from "react-table"
 import { matchSorter } from 'match-sorter'
 
-import { FaSearch } from "react-icons/fa";
+import Search from '../common/Search';
 
 function GlobalFilter({
     //preGlobalFilteredRows,
@@ -16,26 +16,7 @@ function GlobalFilter({
     }, 200)
 
     return (
-        <span>
-            <div className="form-control">
-                <div className="relative">
-                    <input
-                        name="search"
-                        value={value || ""}
-                        type="text"
-                        placeholder="Search"
-                        className="pr-16 input input-primary input-bordered"
-                        onChange={e => {
-                            setValue(e.target.value);
-                            onChange(e.target.value);
-                        }}
-                        style={{
-                            fontSize: '1.1rem'
-                        }} />
-                    <FaSearch className="absolute top-3 right-3" size={20} />
-                </div>
-            </div>
-        </span>
+        <Search value={value} setValue={setValue} onChange={onChange}/>
     )
 }
 
@@ -66,7 +47,7 @@ export default function Table({ columns, data }) {
         {
             columns,
             data,
-            initialState: { pageIndex: 0 },
+            initialState: { pageIndex: 0, pageSize: 5 },
             filterTypes,
         }, useFilters, useGlobalFilter, useSortBy, usePagination)
 
@@ -199,7 +180,7 @@ export default function Table({ columns, data }) {
                                                 setPageSize(Number(e.target.value))
                                             }}
                                         >
-                                            {[10, 20, 30, 40, 50].map(pageSize => (
+                                            {[5, 10, 25].map(pageSize => (
                                                 <option key={pageSize} value={pageSize}>
                                                     Show {pageSize}
                                                 </option>

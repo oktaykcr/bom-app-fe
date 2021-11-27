@@ -27,6 +27,29 @@ export const getComponents = (pageNumber, pageOffset) => {
     };
 }
 
+export const getAllComponents = () => {
+    return (dispatch) => {
+        return new Promise((resolve, reject) => {
+            axios
+                .get(`${url}/component/all`)
+                .then((components) => {
+                    dispatch({
+                        type: "GET_COMPONENTS",
+                        components
+                    });
+                    resolve(components.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toast.error("Components could not fetch!", {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
+                    resolve();
+                });
+        });
+    };
+}
+
 export const createComponent = (component) => {
     return (dispatch) => {
         return new Promise((resolve, reject) => {
