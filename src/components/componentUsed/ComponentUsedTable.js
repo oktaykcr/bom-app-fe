@@ -5,13 +5,14 @@ import Table from "../common/Table";
 
 import { MdEdit, MdDelete } from "react-icons/md";
 
-export default function ComponentUsedTable({ bomId, htmlFor, setComponentUsed, isProcessing }) {
+export default function ComponentUsedTable({ bomId, setIsModalOpen, setComponentUsed, isProcessing }) {
     const dispatch = useDispatch();
     const componentsUsed = useSelector((state) => state.componentsUsed);
 
     const columns = useMemo(() => {
         const handleEditComponentUsed = (componentUsed) => {
-            setComponentUsed(componentUsed)
+            setComponentUsed(componentUsed);
+            setIsModalOpen(true);
         }
 
         const handleDeleteComponentUsed = (id) => {
@@ -86,9 +87,9 @@ export default function ComponentUsedTable({ bomId, htmlFor, setComponentUsed, i
                                     <MdEdit size={20} />
                                 </button>
                                 :
-                                <label onClick={() => handleEditComponentUsed(cellObj.row.original)} htmlFor={htmlFor} className="btn btn-outline btn-primary flex-1 modal-button">
+                                <button onClick={() => handleEditComponentUsed(cellObj.row.original)} className="btn btn-outline btn-primary flex-1 modal-button">
                                     <MdEdit size={20} />
-                                </label>
+                                </button>
                         }
                         <button disabled={isProcessing} onClick={() => handleDeleteComponentUsed(cellObj.row.original["id"])} className="btn btn-outline btn-primary flex-1">
                             <MdDelete size={20} />
@@ -97,7 +98,7 @@ export default function ComponentUsedTable({ bomId, htmlFor, setComponentUsed, i
                 )
             }
         ]
-    }, [htmlFor, isProcessing, setComponentUsed, dispatch]);
+    }, [setIsModalOpen, isProcessing, setComponentUsed, dispatch]);
 
     useEffect(() => {
         dispatch(getAllComponentsUsed(bomId));

@@ -7,8 +7,6 @@ import { FaPlus } from "react-icons/fa";
 
 export default function ComponentPage() {
 
-    const modalFor = "componentCreateUpdateModal";
-
     const componentModel = {
         "id": null,
         "partNumber": '',
@@ -18,6 +16,11 @@ export default function ComponentPage() {
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [component, setComponent] = useState(componentModel);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
 
     return (
         <>
@@ -32,14 +35,13 @@ export default function ComponentPage() {
                             width={30}
                         />
                         :
-                        <label htmlFor={modalFor} className="btn btn-primary modal-button">
+                        <button onClick={openModal} className="btn btn-primary modal-button">
                             <FaPlus />
-                        </label>
+                        </button>
                 }
-                <input type="checkbox" id={modalFor} className="modal-toggle" />
-                <ComponentCreateUpdate htmlFor={modalFor} component={component} setComponent={setComponent} componentModel={componentModel} setIsProcessing={setIsProcessing} />
+                <ComponentCreateUpdate isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} component={component} setComponent={setComponent} componentModel={componentModel} setIsProcessing={setIsProcessing} />
             </div>
-            <ComponentTable htmlFor={modalFor} setComponent={setComponent} isProcessing={isProcessing} />
+            <ComponentTable setIsModalOpen={setIsModalOpen} setComponent={setComponent} isProcessing={isProcessing} />
         </>
     );
 }

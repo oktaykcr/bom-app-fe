@@ -7,7 +7,7 @@ import { deleteComponentById } from "../../store/actions/componentActions";
 
 import { MdEdit, MdDelete } from "react-icons/md";
 
-export default function ComponentTable({ htmlFor, setComponent, isProcessing }) {
+export default function ComponentTable({ setIsModalOpen, setComponent, isProcessing }) {
     const components = useSelector((state) => state.components);
     const dispatch = useDispatch();
 
@@ -17,7 +17,8 @@ export default function ComponentTable({ htmlFor, setComponent, isProcessing }) 
 
     const columns = useMemo(() => {
         const handleEditComponent = (component) => {
-            setComponent(component)
+            setComponent(component);
+            setIsModalOpen(true);
         }
 
         const handleDeleteComponent = (id) => {
@@ -80,9 +81,9 @@ export default function ComponentTable({ htmlFor, setComponent, isProcessing }) 
                                     <MdEdit size={20} />
                                 </button>
                                 :
-                                <label onClick={() => handleEditComponent(cellObj.row.original)} htmlFor={htmlFor} className="btn btn-outline btn-primary flex-1 modal-button">
+                                <button onClick={() => handleEditComponent(cellObj.row.original)} className="btn btn-outline btn-primary flex-1 modal-button">
                                     <MdEdit size={20} />
-                                </label>
+                                </button>
                         }
                         <button disabled={isProcessing} onClick={() => handleDeleteComponent(cellObj.row.original["id"])} className="btn btn-outline btn-primary flex-1">
                             <MdDelete size={20} />
@@ -91,7 +92,7 @@ export default function ComponentTable({ htmlFor, setComponent, isProcessing }) 
                 )
             }
         ];
-    }, [htmlFor, isProcessing, setComponent, dispatch]);
+    }, [setIsModalOpen, isProcessing, setComponent, dispatch]);
 
     return (
         <>

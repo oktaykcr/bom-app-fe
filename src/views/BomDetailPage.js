@@ -12,12 +12,7 @@ export default function BomDetailPage() {
     let { bomId } = useParams();
     const boms = useSelector((state) => state.boms);
     const [currentBom, setCurrentBom] = useState({});
-
-    useEffect(() => {
-        setCurrentBom(boms.find((bom) => bom.id === bomId));
-    }, [boms, bomId]);
-
-    const modalFor = "componentUsedCreateUpdateModal";
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const componentUsedModel = {
         "id": null,
@@ -27,13 +22,23 @@ export default function BomDetailPage() {
         "component": {
             "partNumber": ''
         },
-        "quantity": 0,
+        "quantity": 1,
         "cost": 0,
         "leadTime": 0
     };
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [componentUsed, setComponentUsed] = useState(componentUsedModel);
+
+
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    useEffect(() => {
+        setCurrentBom(boms.find((bom) => bom.id === bomId));
+    }, [boms, bomId]);
 
     return (
         !currentBom ? (
@@ -51,14 +56,13 @@ export default function BomDetailPage() {
                                 width={30}
                             />
                             :
-                            <label htmlFor={modalFor} className="btn btn-primary modal-button">
+                            <button onClick={openModal} className="btn btn-primary modal-button">
                                 <FaPlus />
-                            </label>
+                            </button>
                     }
-                    <input type="checkbox" id={modalFor} className="modal-toggle" />
-                    <ComponentUsedCreateUpdate bomId={bomId} htmlFor={modalFor} componentUsed={componentUsed} setComponentUsed={setComponentUsed} componentUsedModel={componentUsedModel} setIsProcessing={setIsProcessing} />
+                    <ComponentUsedCreateUpdate isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} bomId={bomId} componentUsed={componentUsed} setComponentUsed={setComponentUsed} componentUsedModel={componentUsedModel} setIsProcessing={setIsProcessing} />
                 </div>
-                <ComponentUsedTable bomId={bomId} htmlFor={modalFor} setComponentUsed={setComponentUsed} isProcessing={isProcessing} />
+                <ComponentUsedTable setIsModalOpen={setIsModalOpen} bomId={bomId} setComponentUsed={setComponentUsed} isProcessing={isProcessing} />
             </>
         )
     );

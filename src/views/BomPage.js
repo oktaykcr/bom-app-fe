@@ -7,8 +7,6 @@ import { FaPlus } from "react-icons/fa";
 
 export default function BomPage() {
 
-    const modalFor = "bomSaveUpdateModal";
-
     const bomModel = {
         "id": null,
         "title": '',
@@ -16,18 +14,22 @@ export default function BomPage() {
     };
 
     const [bom, setBom] = useState(bomModel);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
 
     return (
         <>
             <h1 className="header">BOM</h1>
             <div className="flex mb-5 mt-5">
-                <label htmlFor={modalFor} className="btn btn-primary modal-button">
+                <button onClick={openModal} className="btn btn-primary modal-button">
                     <FaPlus />
-                </label>
-                <input type="checkbox" id={modalFor} className="modal-toggle" />
-                <BomCreateUpdate htmlFor={modalFor} bom={bom} setBom={setBom} bomModel={bomModel} />
+                </button>
+                <BomCreateUpdate isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} bom={bom} setBom={setBom} bomModel={bomModel} />
             </div>
-            <BomList itemsPerPage={6} htmlFor={modalFor} setBom={setBom} />
+            <BomList itemsPerPage={10} setIsModalOpen={setIsModalOpen} setBom={setBom} />
         </>
     );
 }

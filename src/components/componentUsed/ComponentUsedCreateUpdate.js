@@ -1,34 +1,54 @@
-import { createRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+import FormError from "../common/FormError";
 
 import { createComponentUsed, updateComponentUsed } from "../../store/actions/componentUsedActions";
 
-export default function ComponentUsedCreateUpdate({ bomId, htmlFor, componentUsed, setComponentUsed, componentUsedModel, setIsProcessing }) {
+const schema = yup.object({
+    component: yup.object().shape({
+        partNumber: yup.string().required()
+    }),
+    quantity: yup.number().required().min(1),
+    cost: yup.number().required().min(0),
+    leadTime: yup.number().required().min(0),
+}).required();
+
+export default function ComponentUsedCreateUpdate({ bomId, isModalOpen, setIsModalOpen, componentUsed, setComponentUsed, componentUsedModel, setIsProcessing }) {
 
     const [actionType, setActionType] = useState('Create');
     const dispatch = useDispatch();
     const components = useSelector((state) => state.components);
 
-    const cancelButtonRef = createRef();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
+    });
 
     useEffect(() => {
+        // Fill the form inputs
+        reset(componentUsed);
+
         if (componentUsed.id) {
             setActionType('Upadate');
         } else {
             setActionType('Create');
         }
-    }, [componentUsed]);
+    }, [reset, componentUsed]);
 
-    const handleCreateOrUpdate = () => {
+    const handleCreateOrUpdate = (data) => {
         setIsProcessing(true);
+        let n = { ...componentUsed, ...data };
 
-        if (componentUsed.id) { // update
-            dispatch(updateComponentUsed(componentUsed)).then(() => {
+        if (n.id) { // update
+            dispatch(updateComponentUsed(n)).then(() => {
                 setIsProcessing(false);
             });
         } else { // create
-            componentUsed.bom.id = bomId;
-            dispatch(createComponentUsed(componentUsed)).then(() => {
+            n.bom.id = bomId;
+            dispatch(createComponentUsed(n)).then(() => {
                 setIsProcessing(false);
             });
         }
@@ -39,44 +59,50 @@ export default function ComponentUsedCreateUpdate({ bomId, htmlFor, componentUse
 
     const handleCancel = () => {
         resetModelState();
+        closeModal();
     }
 
     const closeModal = () => {
-        cancelButtonRef.current.click();
+        setIsModalOpen(false);
     }
 
     const resetModelState = () => {
+        reset(componentUsedModel);
         setComponentUsed(componentUsedModel);
     }
 
     return (
         <>
-            <div className="modal">
+            <div className={`modal ${isModalOpen ? "modal-open" : "modal-close"}`}>
                 <div className="modal-box">
                     <div className="w-full flex justify-center">
                         <form className="w-full rounded-lg">
                             <h2 className="text-3xl text-center mb-4">{actionType} Component To Use</h2>
                             <div className="form-control">
-                                <label class="label">Part Number</label>
-                                <select value={componentUsed.component.partNumber} onChange={(e) => setComponentUsed({ ...componentUsed, component: {partNumber: e.target.value } })} id="partNumber" class="select select-bordered select-primary w-full">
+                                <label className="label">Part Number</label>
+                                <select {...register("component.partNumber")} id="partNumber" class="select select-bordered select-primary w-full">
                                     {
                                         components.map((component) => (
-                                            <option>{component.partNumber}</option>
+                                            <option value={component.partNumber}>{component.partNumber} (Qty: {component.quantityOnHand})</option>
                                         ))
                                     }
                                 </select>
+                                <FormError message={errors.component?.partNumber?.message} />
                                 <label className="label">Quantity</label>
-                                <input type="number" value={componentUsed.quantity} onChange={(e) => setComponentUsed({ ...componentUsed, quantity: e.target.value })} id="quantity" className="input input-primary input-bordered" />
+                                <input type="number" {...register("quantity")} id="quantity" className="input input-primary input-bordered" />
+                                <FormError message={errors.quantity?.message} />
                                 <label className="label">Cost</label>
-                                <input type="number" value={componentUsed.cost} onChange={(e) => setComponentUsed({ ...componentUsed, cost: e.target.value })} id="cost" className="input input-primary input-bordered" />
+                                <input type="number" {...register("cost")} id="cost" className="input input-primary input-bordered" />
+                                <FormError message={errors.cost?.message} />
                                 <label className="label">Lead Time</label>
-                                <input type="number" value={componentUsed.leadTime} onChange={(e) => setComponentUsed({ ...componentUsed, leadTime: e.target.value })} id="leadTime" className="input input-primary input-bordered" />
+                                <input type="number" {...register("leadTime")} id="leadTime" className="input input-primary input-bordered" />
+                                <FormError message={errors.leadTime?.message} />
                             </div>
                         </form>
                     </div>
                     <div className="modal-action">
-                        <button className="btn btn-primary" onClick={handleCreateOrUpdate}>{actionType}</button>
-                        <label ref={cancelButtonRef} htmlFor={htmlFor} className="btn" onClick={handleCancel}>Close</label>
+                        <button className="btn btn-primary" onClick={handleSubmit(handleCreateOrUpdate)}>{actionType}</button>
+                        <button className="btn" onClick={handleCancel}>Close</button>
                     </div>
                 </div>
             </div>
