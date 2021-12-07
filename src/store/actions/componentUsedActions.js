@@ -20,7 +20,6 @@ export const getComponentsUsed = (bomId, pageNumber, pageOffset) => {
                 });
             })
             .catch((error) => {
-                console.log(error);
                 toast.error("Component to use could not fetch!", {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
@@ -43,7 +42,6 @@ export const getAllComponentsUsed = (bomId) => {
                 });
             })
             .catch((error) => {
-                console.log(error);
                 toast.error("Component to use could not fetch!", {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
@@ -66,7 +64,6 @@ export const createComponentUsed = (componentUsed) => {
                     resolve();
                 })
                 .catch((error) => {
-                    console.log(error);
                     toast.error("Component to use could not create!", {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
@@ -91,7 +88,6 @@ export const updateComponentUsed = (component) => {
                     resolve();
                 })
                 .catch((error) => {
-                    console.log(error);
                     toast.error("Component to use could not update!", {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
@@ -114,7 +110,6 @@ export const deleteComponentUsedById = (id) => {
                 });
             })
             .catch((error) => {
-                console.log(error);
                 toast.error("Component to use could not delete!", {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });

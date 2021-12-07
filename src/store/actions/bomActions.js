@@ -21,8 +21,7 @@ export const getBoms = (pageNumber, pageOffset) => {
                     resolve(boms.data);
                 })
                 .catch((error) => {
-                    console.log(error);
-                    toast.error(error.response?.data, {
+                    toast.error("BOMs could not fetch!", {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
                     resolve();
@@ -48,7 +47,6 @@ export const getBomsByTitle = (title) => {
                     resolve(boms.data);
                 })
                 .catch((error) => {
-                    console.log(error);
                     toast.error("BOMs could not fetch!", {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
@@ -71,8 +69,7 @@ export const createBom = (bom) => {
                 });
             })
             .catch((error) => {
-                console.log(error);
-                toast.error(error.response?.data, {
+                toast.error("BOM could not create!", {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
             });
@@ -92,8 +89,7 @@ export const updateBom = (bom) => {
                 });
             })
             .catch((error) => {
-                console.log(error);
-                toast.error(error.response?.data, {
+                toast.error("BOM could not update!", {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
             });
@@ -113,8 +109,7 @@ export const deleteBomById = (id) => {
                 });
             })
             .catch((error) => {
-                console.log(error);
-                toast.error(error.response?.data, {
+                toast.error("BOM could not delete!", {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
             });

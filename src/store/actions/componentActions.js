@@ -19,8 +19,7 @@ export const getComponents = (pageNumber, pageOffset) => {
                 });
             })
             .catch((error) => {
-                console.log(error);
-                toast.error(error.response?.data, {
+                toast.error("Components could not fetch!", {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
             });
@@ -40,7 +39,6 @@ export const getAllComponents = () => {
                     resolve(components.data);
                 })
                 .catch((error) => {
-                    console.log(error);
                     toast.error("Components could not fetch!", {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
@@ -65,10 +63,10 @@ export const createComponent = (component) => {
                     resolve();
                 })
                 .catch((error) => {
-                    console.log(error);
-                    toast.error(error.response?.data, {
+                    toast.error("Component could not create!", {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
+                    resolve();
                 });
         });
     }
@@ -89,10 +87,10 @@ export const updateComponent = (component) => {
                     resolve();
                 })
                 .catch((error) => {
-                    console.log(error);
-                    toast.error(error.response?.data, {
+                    toast.error("Component could not update!", {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
+                    resolve();
                 });
         });
     }
@@ -112,7 +110,7 @@ export const deleteComponentById = (id) => {
             })
             .catch((error) => {
                 console.log(error);
-                toast.error(error.response?.data, {
+                toast.error("Component could not delete!", {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
             });

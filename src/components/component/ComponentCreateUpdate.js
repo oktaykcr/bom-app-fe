@@ -80,7 +80,7 @@ export default function ComponentCreateUpdate({ isModalOpen, setIsModalOpen, com
                                 <label className="label">Supplier Link</label>
                                 <input type="text" {...register("supplierLink")} id="supplierLink" className="input input-primary input-bordered" />
                                 <FormError message={errors.supplierLink?.message} />
-                                <label className="label">quantityOnHand</label>
+                                <label className="label">Quantity On Hand</label>
                                 <input type="number" {...register("quantityOnHand")} id="quantityOnHand" className="input input-primary input-bordered" />
                                 <FormError message={errors.quantityOnHand?.message} />
                             </div>

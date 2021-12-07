@@ -28,12 +28,12 @@ export const login = (username, password) => {
 
                     resolve();
                 })
-                .catch(err =>
+                .catch(err => {
                     toast.error("Login Failed!", {
                         position: toast.POSITION.BOTTOM_RIGHT,
-                    })
-                    //console.log(err);
-                );
+                    });
+                    resolve();
+                });
         });
     }
 }
@@ -55,11 +55,12 @@ export const register = (username, password, email) => {
                     });
                     resolve();
                 })
-                .catch(err =>
+                .catch(err => {
                     toast.error("Register Failed!", {
                         position: toast.POSITION.BOTTOM_RIGHT,
-                    })
-                );
+                    });
+                    resolve();
+                });
         });
     }
 }
@@ -99,6 +100,7 @@ export const loadUser = () => {
                         dispatch({
                             type: "LOGOUT"
                         });
+                        resolve();
                     });
             } else return null;
         });
