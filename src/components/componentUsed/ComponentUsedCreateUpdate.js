@@ -7,6 +7,7 @@ import * as yup from "yup";
 import FormError from "../common/FormError";
 
 import { createComponentUsed, updateComponentUsed } from "../../store/actions/componentUsedActions";
+import CustomSelect from "../common/CustomSelect";
 
 const schema = yup.object({
     component: yup.object().shape({
@@ -23,7 +24,14 @@ export default function ComponentUsedCreateUpdate({ bomId, isModalOpen, setIsMod
     const dispatch = useDispatch();
     const components = useSelector((state) => state.components);
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    const selectOptions = components.map((component) => {
+        let obj = {};
+        obj["label"] = component.description;
+        obj["value"] = component.partNumber;
+        return obj;
+    });
+
+    const { register, handleSubmit, reset, formState: { errors }, control } = useForm({
         resolver: yupResolver(schema)
     });
 
@@ -80,13 +88,7 @@ export default function ComponentUsedCreateUpdate({ bomId, isModalOpen, setIsMod
                             <h2 className="text-3xl text-center mb-4">{actionType} Component To Use</h2>
                             <div className="form-control">
                                 <label className="label">Part Number</label>
-                                <select {...register("component.partNumber")} id="partNumber" class="select select-bordered select-primary w-full">
-                                    {
-                                        components.map((component) => (
-                                            <option value={component.partNumber}>{component.partNumber} (Qty: {component.quantityOnHand})</option>
-                                        ))
-                                    }
-                                </select>
+                                <CustomSelect name="component.partNumber" options={selectOptions} control={control} isDisabled={componentUsed.id != null}/>
                                 <FormError message={errors.component?.partNumber?.message} />
                                 <label className="label">Quantity</label>
                                 <input type="number" {...register("quantity")} id="quantity" className="input input-primary input-bordered" />
