@@ -1,8 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { url } from "../../api";
-
 export const login = (username, password) => {
     let headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -14,7 +12,7 @@ export const login = (username, password) => {
 
     return (dispatch) => {
         return new Promise((resolve, reject) => {
-            axios.post(`${url}/user/login`, params, { headers: headers })
+            axios.post(`/user/login`, params, { headers: headers })
                 .then(response => {
                     let responseHeaders = response["headers"];
                     let token = responseHeaders["authorization"];
@@ -48,7 +46,7 @@ export const register = (username, password, email) => {
             }
             console.log(body);
 
-            axios.post(`${url}/user/register`, body)
+            axios.post(`/user/register`, body)
                 .then(response => {
                     dispatch({
                         type: "SIGN_UP"
@@ -86,7 +84,7 @@ export const loadUser = () => {
                 let tokenWithoutBearer = token.substring(7, token.length);
                 bodyFormData.append('token', tokenWithoutBearer);
 
-                axios.post(`${url}/user/validate`, bodyFormData, { headers: headers })
+                axios.post(`/user/validate`, bodyFormData, { headers: headers })
                     .then(response => {
                         if (response.data) {
                             dispatch({

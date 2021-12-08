@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-export const url = "http://localhost:8081/api/v1";
-
 export const setAuthorizationToken = (token) => {
     if (token) {
         axios.defaults.headers.common["Authorization"] = `${token}`;

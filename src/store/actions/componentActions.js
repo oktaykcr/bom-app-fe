@@ -1,12 +1,10 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { url } from "../../api";
-
 export const getComponents = (pageNumber, pageOffset) => {
     return (dispatch) => {
         axios
-            .get(`${url}/component`, {
+            .get(`/component`, {
                 params: {
                     pageNumber: pageNumber,
                     pageOffset: pageOffset
@@ -30,7 +28,7 @@ export const getAllComponents = () => {
     return (dispatch) => {
         return new Promise((resolve, reject) => {
             axios
-                .get(`${url}/component/all`)
+                .get(`/component/all`)
                 .then((components) => {
                     dispatch({
                         type: "GET_COMPONENTS",
@@ -51,7 +49,7 @@ export const getAllComponents = () => {
 export const createComponent = (component) => {
     return (dispatch) => {
         return new Promise((resolve, reject) => {
-            axios.post(`${url}/component`, component)
+            axios.post(`/component`, component)
                 .then((createdComponent) => {
                     dispatch({
                         type: "CREATE_COMPONENT",
@@ -75,7 +73,7 @@ export const createComponent = (component) => {
 export const updateComponent = (component) => {
     return (dispatch) => {
         return new Promise((resolve, reject) => {
-            axios.put(`${url}/component`, component)
+            axios.put(`/component`, component)
                 .then((updatedComponent) => {
                     dispatch({
                         type: "UPDATE_COMPONENT",
@@ -98,7 +96,7 @@ export const updateComponent = (component) => {
 
 export const deleteComponentById = (id) => {
     return (dispatch) => {
-        axios.delete(`${url}/component/${id}`)
+        axios.delete(`/component/${id}`)
             .then((result) => {
                 dispatch({
                     type: "DELETE_COMPONENT",

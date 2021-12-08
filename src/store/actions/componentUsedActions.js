@@ -1,12 +1,10 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { url } from "../../api";
-
 export const getComponentsUsed = (bomId, pageNumber, pageOffset) => {
     return (dispatch) => {
         axios
-            .get(`${url}/componentused/bybom`, {
+            .get(`/componentused/bybom`, {
                 params: {
                     bomId: bomId,
                     pageNumber: pageNumber,
@@ -30,7 +28,7 @@ export const getComponentsUsed = (bomId, pageNumber, pageOffset) => {
 export const getAllComponentsUsed = (bomId) => {
     return (dispatch) => {
         axios
-            .get(`${url}/componentused/all`, {
+            .get(`/componentused/all`, {
                 params: {
                     bomId: bomId
                 }
@@ -52,7 +50,7 @@ export const getAllComponentsUsed = (bomId) => {
 export const createComponentUsed = (componentUsed) => {
     return (dispatch) => {
         return new Promise((resolve, reject) => {
-            axios.post(`${url}/componentused`, componentUsed)
+            axios.post(`/componentused`, componentUsed)
                 .then((createdComponentUsed) => {
                     dispatch({
                         type: "CREATE_COMPONENT_USED",
@@ -76,7 +74,7 @@ export const createComponentUsed = (componentUsed) => {
 export const updateComponentUsed = (component) => {
     return (dispatch) => {
         return new Promise((resolve, reject) => {
-            axios.put(`${url}/componentused`, component)
+            axios.put(`/componentused`, component)
                 .then((updatedComponentUsed) => {
                     dispatch({
                         type: "UPDATE_COMPONENT_USED",
@@ -99,7 +97,7 @@ export const updateComponentUsed = (component) => {
 
 export const deleteComponentUsedById = (id) => {
     return (dispatch) => {
-        axios.delete(`${url}/componentused/${id}`)
+        axios.delete(`/componentused/${id}`)
             .then((result) => {
                 dispatch({
                     type: "DELETE_COMPONENT_USED",

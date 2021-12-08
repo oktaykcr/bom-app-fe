@@ -1,13 +1,11 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { url } from "../../api";
-
 export const getBoms = (pageNumber, pageOffset) => {
     return (dispatch) => {
         return new Promise((resolve, reject) => {
             axios
-                .get(`${url}/bom`, {
+                .get(`/bom`, {
                     params: {
                         pageNumber: pageNumber,
                         pageOffset: pageOffset
@@ -34,7 +32,7 @@ export const getBomsByTitle = (title) => {
     return (dispatch) => {
         return new Promise((resolve, reject) => {
             axios
-                .get(`${url}/bom/search`, {
+                .get(`/bom/search`, {
                     params: {
                         title: title
                     }
@@ -58,7 +56,7 @@ export const getBomsByTitle = (title) => {
 
 export const createBom = (bom) => {
     return (dispatch) => {
-        axios.post(`${url}/bom`, bom)
+        axios.post(`/bom`, bom)
             .then((createdBom) => {
                 dispatch({
                     type: "CREATE_BOM",
@@ -78,7 +76,7 @@ export const createBom = (bom) => {
 
 export const updateBom = (bom) => {
     return (dispatch) => {
-        axios.put(`${url}/bom`, bom)
+        axios.put(`/bom`, bom)
             .then((updatedBom) => {
                 dispatch({
                     type: "UPDATE_BOM",
@@ -98,7 +96,7 @@ export const updateBom = (bom) => {
 
 export const deleteBomById = (id) => {
     return (dispatch) => {
-        axios.delete(`${url}/bom/${id}`)
+        axios.delete(`/bom/${id}`)
             .then((result) => {
                 dispatch({
                     type: "DELETE_BOM",
