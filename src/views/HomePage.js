@@ -1,11 +1,17 @@
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+
 export default function HomePage(props) {
+    const auth = useSelector(state => state.auth);
 
     const handleGetStarted = () => {
         props.history.push("/login");
     };
 
     return (
-        <>
+        auth.username ? (
+            <Redirect to="/bom" />
+        ) : (
             <div className="hero min-h-screen bg-hero-pattern">
                 <div className="hero-overlay bg-opacity-60"></div>
                 <div className="text-center hero-content text-neutral-content">
@@ -20,6 +26,6 @@ export default function HomePage(props) {
                     </div>
                 </div>
             </div>
-        </>
+        )
     );
 }

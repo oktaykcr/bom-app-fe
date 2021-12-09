@@ -22,11 +22,14 @@ export default function Header(props) {
                 </span>
             </div>
             <div className="flex-1 px-2 mx-2">
-                <div className="items-stretch hidden lg:flex">
-                    <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
-                        Home
-                    </Link>
-                </div>
+                {
+                    !auth.username &&
+                    <div className="items-stretch hidden lg:flex">
+                        <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
+                            Home
+                        </Link>
+                    </div>
+                }
             </div>
             {
                 auth.username ?
