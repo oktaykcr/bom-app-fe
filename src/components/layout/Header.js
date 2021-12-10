@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { logout } from '../../store/actions/authActions';
 
+import { FiUser, FiMail } from 'react-icons/fi';
+import { GiMicrochip } from 'react-icons/gi';
+
 export default function Header(props) {
     const dispatch = useDispatch();
 
@@ -17,6 +20,7 @@ export default function Header(props) {
     return (
         <div className="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box sticky top-0 z-50">
             <div className="flex-none px-2 mx-2">
+                <GiMicrochip className="mr-2" size={40} />
                 <span className="text-lg font-bold">
                     BOM APP
                 </span>
@@ -53,17 +57,13 @@ export default function Header(props) {
                             <ul tabIndex="0" className="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
                                 <li className="mb-1">
                                     <span className="text-lg font-bold">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
+                                        <FiUser className="mr-2" size={20} />
                                         {auth.username}
                                     </span>
                                 </li>
                                 <li className="mb-3">
                                     <span className="text-base">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                        </svg>
+                                        <FiMail className="mr-2" size={20} />
                                         {auth.email}
                                     </span>
                                 </li>

@@ -1,20 +1,35 @@
 import { useDispatch } from 'react-redux';
-import { useState } from "react";
-import { register } from '../store/actions/authActions';
+import { register as registerUser } from '../store/actions/authActions';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+import FormError from "../components/common/FormError";
+
+import { FiLock, FiUser, FiMail } from 'react-icons/fi';
+
+
+const schema = yup.object({
+    username: yup.string().required(),
+    email: yup.string().required(),
+    password: yup.string().required(),
+    passwordConf: yup.string().required().when(['password'], (password, sch) => {
+        return sch.test({
+            test: passwordConf => passwordConf === password,
+            message: "Password Confirmation must be equal to Password."
+        })
+    })
+}).required();
 
 export default function RegisterPage(props) {
     const dispatch = useDispatch();
 
-    const [registedUser, setRegisteredUser] = useState({
-        username: "",
-        password: "",
-        passwordConf: "",
-        email: ""
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
     });
 
-    const handleRegister = (e) => {
-        e.preventDefault();
-        dispatch(register(registedUser.username, registedUser.password, registedUser.email)).then(() => {
+    const handleRegister = (data) => {
+        dispatch(registerUser(data.username, data.password, data.email)).then(() => {
             props.history.push("/login");
         });
     };
@@ -22,46 +37,34 @@ export default function RegisterPage(props) {
     return (
         <div className="w-full flex justify-center">
             <form className="w-full md:w-1/3 rounded-lg">
-                <h2 className="text-3xl text-center mb-4">Register</h2>
+                <h2 className="header text-center mb-4">Register</h2>
                 <div className="p-10 card bg-base-200">
                     <div className="form-control">
                         <label className="label">
                             Username
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
+                            <FiUser size={20} />
                         </label>
-                        <input id="username" value={registedUser.username} onChange={(e) => setRegisteredUser({ ...registedUser, username: e.target.value })} type="text" className="input" />
+                        <input {...register("username")} id="username" type="text" className="input" />
+                        <FormError message={errors.username?.message} />
                         <label className="label">
                             Email
-                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                                <polyline points="3 7 12 13 21 7"></polyline>
-                            </svg>
+                            <FiMail size={20} />
                         </label>
-                        <input id="email" value={registedUser.email} onChange={(e) => setRegisteredUser({ ...registedUser, email: e.target.value })} type="email" className="input" />
+                        <input {...register("email")} id="email" type="email" className="input" />
+                        <FormError message={errors.email?.message} />
                         <label className="label">
                             Password
-                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-lock" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <rect x="5" y="11" width="14" height="10" rx="2"></rect>
-                                <circle cx="12" cy="16" r="1"></circle>
-                                <path d="M8 11v-4a4 4 0 0 1 8 0v4"></path>
-                            </svg>
+                            <FiLock size={20} />
                         </label>
-                        <input id="password" value={registedUser.password} onChange={(e) => setRegisteredUser({ ...registedUser, password: e.target.value })} type="password" className="input" />
+                        <input {...register("password")} id="password" type="password" className="input" />
+                        <FormError message={errors.password?.message} />
                         <label className="label">
                             Password Confirmation
-                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-lock" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <rect x="5" y="11" width="14" height="10" rx="2"></rect>
-                                <circle cx="12" cy="16" r="1"></circle>
-                                <path d="M8 11v-4a4 4 0 0 1 8 0v4"></path>
-                            </svg>
+                            <FiLock size={20} />
                         </label>
-                        <input id="passwordConf" value={registedUser.passwordConf} onChange={(e) => setRegisteredUser({ ...registedUser, passwordConf: e.target.value })} type="password" className="input" />
-                        <button onClick={handleRegister} className="btn btn-primary mt-4">Register</button>
+                        <input {...register("passwordConf")} id="passwordConf" type="password" className="input" />
+                        <FormError message={errors.passwordConf?.message} />
+                        <button onClick={handleSubmit(handleRegister)} className="btn btn-primary mt-4">Register</button>
                     </div>
                 </div>
             </form>

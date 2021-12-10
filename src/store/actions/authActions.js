@@ -51,6 +51,9 @@ export const register = (username, password, email) => {
                     dispatch({
                         type: "SIGN_UP"
                     });
+                    toast.success("Registered successfully.", {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                    });
                     resolve();
                 })
                 .catch(err => {
