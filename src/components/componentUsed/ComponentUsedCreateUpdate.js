@@ -11,7 +11,7 @@ import CustomSelect from "../common/CustomSelect";
 
 const schema = yup.object({
     component: yup.object().shape({
-        partNumber: yup.string().required()
+        mouserPartNumber: yup.string().required()
     }),
     quantity: yup.number().required().min(1),
     cost: yup.number().required().min(0),
@@ -27,7 +27,7 @@ export default function ComponentUsedCreateUpdate({ bomId, isModalOpen, setIsMod
     const selectOptions = components.map((component) => {
         let obj = {};
         obj["label"] = component.description;
-        obj["value"] = component.partNumber;
+        obj["value"] = component.mouserPartNumber;
         return obj;
     });
 
@@ -87,9 +87,9 @@ export default function ComponentUsedCreateUpdate({ bomId, isModalOpen, setIsMod
                         <form className="w-full rounded-lg">
                             <h2 className="text-3xl text-center mb-4">{actionType} Component To Use</h2>
                             <div className="form-control">
-                                <label className="label">Part Number</label>
-                                <CustomSelect name="component.partNumber" options={selectOptions} control={control} isDisabled={componentUsed.id != null}/>
-                                <FormError message={errors.component?.partNumber?.message} />
+                                <label className="label">Component</label>
+                                <CustomSelect name="component.mouserPartNumber" options={selectOptions} control={control} isDisabled={componentUsed.id != null}/>
+                                <FormError message={errors.component?.mouserPartNumber?.message} />
                                 <label className="label">Quantity</label>
                                 <input type="number" {...register("quantity")} id="quantity" className="input input-primary input-bordered" />
                                 <FormError message={errors.quantity?.message} />

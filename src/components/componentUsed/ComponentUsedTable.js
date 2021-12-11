@@ -22,7 +22,20 @@ export default function ComponentUsedTable({ bomId, setIsModalOpen, setComponent
         return [
             {
                 Header: 'Part Number',
-                accessor: 'component.partNumber'
+                accessor: r => (
+                    <div className="wrapper">
+                        <div>
+                            <span className="badge badge-accent badge-outline">Mouser: </span>
+                            <br />
+                            {r.component.mouserPartNumber}
+                        </div>
+                        <div>
+                            <span className="badge badge-secondary badge-outline">Manufacturer: </span>
+                            <br />
+                            {r.component.manufacturerPartNumber}
+                        </div>
+                    </div>
+                )
             },
             {
                 Header: 'Image',
@@ -33,6 +46,16 @@ export default function ComponentUsedTable({ bomId, setIsModalOpen, setComponent
                             src={value} alt={value}
                         />
                     </div>
+                )
+            },
+            {
+                Header: 'Datasheet',
+                accessor: 'component.dataSheetUrl',
+                Cell: ({ value }) => (
+                    <a className="link link-secondary"
+                        href={value}
+                        rel="noopener noreferrer"
+                        target="_blank">Datasheet</a>
                 )
             },
             {

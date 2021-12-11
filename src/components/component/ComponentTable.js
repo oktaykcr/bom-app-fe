@@ -27,7 +27,20 @@ export default function ComponentTable({ setIsModalOpen, setComponent, isProcess
         return [
             {
                 Header: 'Part Number',
-                accessor: 'partNumber'
+                accessor: r => (
+                    <div className="wrapper">
+                        <div>
+                            <span className="badge badge-accent badge-outline">Mouser: </span>
+                            <br />
+                            {r.mouserPartNumber}
+                        </div>
+                        <div>
+                            <span className="badge badge-secondary badge-outline">Manufacturer: </span>
+                            <br />
+                            {r.manufacturerPartNumber}
+                        </div>
+                    </div>
+                )
             },
             {
                 Header: 'Image',
@@ -38,6 +51,16 @@ export default function ComponentTable({ setIsModalOpen, setComponent, isProcess
                             src={value} alt={value}
                         />
                     </div>
+                )
+            },
+            {
+                Header: 'Datasheet',
+                accessor: 'dataSheetUrl',
+                Cell: ({ value }) => (
+                    <a className="link link-secondary"
+                        href={value}
+                        rel="noopener noreferrer"
+                        target="_blank">Datasheet</a>
                 )
             },
             {
