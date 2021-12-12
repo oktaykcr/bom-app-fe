@@ -27,6 +27,7 @@ export default function ComponentTable({ setIsModalOpen, setComponent, isProcess
         return [
             {
                 Header: 'Part Number',
+                id: "mouserPartNumber",
                 accessor: r => (
                     <div className="wrapper">
                         <div>
@@ -119,7 +120,7 @@ export default function ComponentTable({ setIsModalOpen, setComponent, isProcess
 
     return (
         <>
-            <Table columns={columns} data={components} />
+            <Table title="Components" columns={columns} data={components} />
         </>
     );
 }

@@ -22,6 +22,7 @@ export default function ComponentUsedTable({ bomId, setIsModalOpen, setComponent
         return [
             {
                 Header: 'Part Number',
+                id: "component.mouserPartNumber",
                 accessor: r => (
                     <div className="wrapper">
                         <div>
@@ -72,6 +73,7 @@ export default function ComponentUsedTable({ bomId, setIsModalOpen, setComponent
             },
             {
                 Header: 'Quantity',
+                id: "quantity",
                 accessor: r => `${r.quantity} (${r.component.quantityOnHand})`,
             },
             {
@@ -131,7 +133,7 @@ export default function ComponentUsedTable({ bomId, setIsModalOpen, setComponent
 
     return (
         <>
-            <Table columns={columns} data={componentsUsed} />
+            <Table title="ComponentsUsed" columns={columns} data={componentsUsed} />
         </>
     );
 }

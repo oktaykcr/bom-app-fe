@@ -3,6 +3,7 @@ import { useTable, useSortBy, useFilters, useGlobalFilter, useAsyncDebounce, use
 import { matchSorter } from 'match-sorter'
 
 import Search from '../common/Search';
+import CSVExport from "../common/CSVExport";
 
 function GlobalFilter({
     //preGlobalFilteredRows,
@@ -16,7 +17,7 @@ function GlobalFilter({
     }, 200)
 
     return (
-        <Search value={value} setValue={setValue} onChange={onChange}/>
+        <Search value={value} setValue={setValue} onChange={onChange} />
     )
 }
 
@@ -24,7 +25,7 @@ function fuzzyTextFilterFn(rows, id, filterValue) {
     return matchSorter(rows, filterValue, { keys: [row => row.values[id]] })
 }
 
-export default function Table({ columns, data }) {
+export default function Table({ title, columns, data }) {
 
     const filterTypes = useMemo(
         () => ({
@@ -142,7 +143,7 @@ export default function Table({ columns, data }) {
                             <tr>
                                 <th
                                     className="pt-5"
-                                    colSpan={3}
+                                    colSpan={2}
                                     style={{
                                         textAlign: 'left',
                                         backgroundColor: 'transparent',
@@ -165,6 +166,9 @@ export default function Table({ columns, data }) {
                                     <button className="btn btn-primary" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
                                         {'>>'}
                                     </button>
+                                </th>
+                                <th>
+                                    <CSVExport title={title} data={data} columns={columns} />
                                 </th>
                                 <th
                                     colSpan={visibleColumns.length}
