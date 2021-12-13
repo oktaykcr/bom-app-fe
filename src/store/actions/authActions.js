@@ -30,7 +30,6 @@ export const login = (username, password) => {
                     toast.error("Login Failed!", {
                         position: toast.POSITION.BOTTOM_RIGHT,
                     });
-                    resolve();
                 });
         });
     }
