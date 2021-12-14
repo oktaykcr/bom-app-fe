@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import { IconContext } from "react-icons";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 
 import AppRouter from "./navigation/AppRouter";
 import Header from "./components/layout/Header";
@@ -11,6 +12,8 @@ import Footer from "./components/layout/Footer";
 import 'react-toastify/dist/ReactToastify.css';
 
 import { loadUser } from "./store/actions/authActions";
+
+axios.defaults.baseURL = 'http://localhost:8081/api/v1';
 
 function App() {
   const dispatch = useDispatch();
