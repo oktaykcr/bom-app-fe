@@ -45,21 +45,21 @@ the frontend side is developed with ReactJs.
 
 ### Prerequisites
 
-- Install *Docker* to create container.
+- Install *Docker* to execute docker-compose.
 
 ### Installing
 
 1. Create a Docker Image:
-    - `docker build -t bom-app-fe .`
+    - `docker-compose build`
 2. Run the Docker Container:
-    - `docker run -d -it -p 80:80/tcp --name bom-app bom-app-fe:latest`
+    - `docker run -d -it -p 80:80 --name bom-app-fe bom-app-fe`
 3. See BOM app at browser:
     - `http://localhost/`
 
-docker output:
+docker runing containers output:
 
 ```
-1663e718660a bom-app-fe:latest "/docker-entrypoint.…" 23 seconds ago Up 20 seconds 0.0.0.0:80->80/tcp bom-app
+df69be525a1b bom-app-fe "/docker-entrypoint.…" 4 minutes ago Up 4 minutes 0.0.0.0:80->80/tcp bom-app-fe
 ```
 
 ## 🎈 Usage <a name="usage"></a>

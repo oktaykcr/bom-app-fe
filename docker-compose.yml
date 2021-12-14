@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: bom-app-fe
+    image: bom-app-fe
+    ports:
+      - "80:80"
+    build:
+      context: .
