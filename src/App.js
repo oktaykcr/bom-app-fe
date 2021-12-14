@@ -16,6 +16,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    document.title = "BOM App"
     dispatch(loadUser());
   }, [dispatch])
 
