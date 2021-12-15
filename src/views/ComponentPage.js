@@ -9,7 +9,7 @@ export default function ComponentPage() {
 
     const componentModel = {
         "id": null,
-        "partNumber": '',
+        "mouserPartNumber": '',
         "supplierLink": '',
         "quantityOnHand": 0
     };

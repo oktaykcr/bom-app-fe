@@ -9,7 +9,7 @@ import FormError from "../common/FormError";
 import { createComponent, updateComponent } from "../../store/actions/componentActions";
 
 const schema = yup.object({
-    partNumber: yup.string().required(),
+    mouserPartNumber: yup.string().required(),
     supplierLink: yup.string().required(),
     quantityOnHand: yup.number().required().min(0)
 }).required();
@@ -74,9 +74,9 @@ export default function ComponentCreateUpdate({ isModalOpen, setIsModalOpen, com
                         <form className="w-full rounded-lg">
                             <h2 className="text-3xl text-center mb-4">{actionType} Component</h2>
                             <div className="form-control">
-                                <label className="label">Part Number</label>
-                                <input type="text" {...register("partNumber")} id="partNumber" className="input input-primary input-bordered" disabled={component.id != null} />
-                                <FormError message={errors.partNumber?.message} />
+                                <label className="label">Mouser Part Number</label>
+                                <input type="text" {...register("mouserPartNumber")} id="partNumber" className="input input-primary input-bordered" disabled={component.id != null} />
+                                <FormError message={errors.mouserPartNumber?.message} />
                                 <label className="label">Supplier Link</label>
                                 <input type="text" {...register("supplierLink")} id="supplierLink" className="input input-primary input-bordered" />
                                 <FormError message={errors.supplierLink?.message} />

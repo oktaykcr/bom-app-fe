@@ -20,7 +20,7 @@ export default function BomDetailPage() {
             "id": ''
         },
         "component": {
-            "partNumber": ''
+            "mouserPartNumber": ''
         },
         "quantity": 1,
         "cost": 0,
