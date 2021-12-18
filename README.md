@@ -78,6 +78,8 @@ df69be525a1b bom-app-fe "/docker-entrypoint.…" 4 minutes ago Up 4 minutes 0.0.
 
 Repeat these steps and manage your components easily.
 
+https://user-images.githubusercontent.com/26169464/146639001-64b2223d-3ef2-4399-92e4-79a8d78ad640.mp4
+
 ## 🚀 Deployment <a name = "deployment"></a>
 
 TODO
