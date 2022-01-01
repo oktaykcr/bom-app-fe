@@ -13,7 +13,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { loadUser } from "./store/actions/authActions";
 
-axios.defaults.baseURL = 'http://localhost:8081/api/v1';
+const { REACT_APP_SERVER_API_URL } = process.env;
+
+axios.defaults.baseURL = `${REACT_APP_SERVER_API_URL}`;
 
 function App() {
   const dispatch = useDispatch();
